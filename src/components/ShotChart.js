@@ -1,21 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
+
 import nba from 'nba';
 import * as d3 from 'd3';
-import { hexbin } from 'd3-hexbin';
-import { court, shots } from 'd3-shotchart';
+import {hexbin} from 'd3-hexbin';
+import {court, shots} from 'd3-shotchart';
 import PropTypes from 'prop-types';
 
-window.d3_hexbin = {hexbin : hexbin}; // workaround library problem
 
-export class ShotChart extends React.Component {
+window.d3_hexbin = {hexbin: hexbin}; // workaround library problem
+
+class ShotChart extends Component {
     static propTypes = {
-        playerId: PropTypes.number,
-        minCount: PropTypes.number,
-        chartType: PropTypes.string,
-        displayTooltip: PropTypes.bool,
+        playerId: PropTypes.number.isRequired,
+        minCount: PropTypes.number
     }
 
     componentDidUpdate() {
+        console.log(this.props.minCount)
         nba.stats.shots({
             PlayerID: this.props.playerId
         }).then((response) => {
@@ -24,23 +25,24 @@ export class ShotChart extends React.Component {
                 y: (shot.locY + 50) / 10,
                 action_type: shot.actionType,
                 shot_distance: shot.shotDistance,
-                shot_made_flag: shot.shotMadeFlag,
+                shot_made_flag: shot.shotMadeFlag
             }));
 
             const courtSelection = d3.select("#shot-chart");
-            courtSelection.html('');
+            courtSelection.html("");
             const chart_court = court().width(500);
-            const chart_shots = shots()
-                .shotRenderThreshold(this.props.minCount)
-                .displayToolTips(this.props.displayTooltip)
-                .displayType(this.props.chartType);
+            const chart_shots = shots().shotRenderThreshold(this.props.minCount).displayToolTips(this.props.displayTooltip).displayType(this.props.chartType);
             courtSelection.call(chart_court);
             courtSelection.datum(final_shots).call(chart_shots);
         });
     }
+
     render() {
         return (
-            <div id="shot-chart"></div>
+            <div id="shot-chart">
+            </div>
         );
     }
 }
+
+export default ShotChart;

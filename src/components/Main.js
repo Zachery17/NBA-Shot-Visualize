@@ -1,16 +1,30 @@
-import React from 'react';
-import { DataViewContainer } from './DataViewContainer';
-import nba from 'nba'
-import { Profile } from './Profile';
-import { SearchBar } from './SearchBar';
-import { DEFAULT_PLAYER_INFO } from '../constants';
+import React, {Component} from 'react';
+import Profile from './Profile';
+import DataViewContainer from './DataViewContainer';
+import {SearchBar} from './SearchBar'
+import {DEFAULT_PLAYER_INFO} from '../constants'
 
-export class Main extends React.Component {
+import nba from 'nba';
 
+class Main extends Component {
+    // state = {
+    //     playerId: nba.findPlayer('Stephen Curry').playerId,
+    //     playerInfo: {}
+    // }
     state = {
         playerInfo: DEFAULT_PLAYER_INFO,
     }
 
+
+    // componentDidMount() {
+    //     nba.stats.playerInfo({PlayerID: this.state.playerId})
+    //         .then((info) => {
+    //             const playerInfo = Object.assign(info.commonPlayerInfo[0], info.playerHeadlineStats[0]);
+    //             console.log('playerInfo', playerInfo);
+    //             this.setState({playerInfo});
+    //         })
+    //         .catch((e) => console.log(e))
+    // }
     componentDidMount() {
         this.loadPlayerInfo(this.state.playerInfo.fullName);
     }
@@ -29,7 +43,7 @@ export class Main extends React.Component {
 
     render() {
         return (
-            <div className="main">
+            <div className= "main">
                 <SearchBar loadPlayerInfo={this.handleSelectPlayer}/>
                 <div className="player">
                     <Profile playerInfo={this.state.playerInfo}/>
@@ -39,3 +53,5 @@ export class Main extends React.Component {
         );
     }
 }
+
+export default Main;

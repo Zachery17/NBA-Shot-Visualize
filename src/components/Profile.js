@@ -1,7 +1,8 @@
-import React from 'react';
-import { PROFILE_PIC_URL_PREFIX, TEAM_PIC_URL_PREFIX } from '../constants';
+import React, {Component} from 'react';
+import {PROFILE_PIC_URL_PREFIX, TEAM_PIC_URL_PREFIX} from '../constants'
 
-export class Profile extends React.Component {
+
+class Profile extends Component {
     render() {
         const {
             teamAbbreviation,
@@ -11,8 +12,9 @@ export class Profile extends React.Component {
             height,
             weight,
             playerId,
-            pts, reb, ast, pie,
+            pts, reb, ast, pie
         } = this.props.playerInfo;
+
         return (
             <div className="profile">
                 <div className="profile-entry player-name">{`${playerName}`}</div>
@@ -56,5 +58,8 @@ export class Profile extends React.Component {
                 </div>
             </div>
         );
+
     }
 }
+
+export default Profile;
